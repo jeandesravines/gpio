@@ -7,7 +7,7 @@ Control Raspberry Pi GPIO pins with NodeJS and ES6 Promises.
 
 This module can then be installed with npm:
 ```shell
-npm install @jdes/gpio
+npm install jdes-gpio
 ```
 
 ## Usage
@@ -263,7 +263,7 @@ All pull requests have to pass tests and have a sufficient coverage.
 
 You can run the tests with npm:
 ```shell
-sudo npm test
+npm test
 ```
 
 
