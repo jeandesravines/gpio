@@ -20,7 +20,7 @@ Import module:
 /**
  * @class {Gpio}
  */
-const Gpio = require('@jdes/gpio');
+const Gpio = require('jdes-gpio');
 ```
 
 Instantiate:
