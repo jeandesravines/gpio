@@ -1,0 +1,37 @@
+{
+	"name": "@jdes/gpio",
+	"version": "1.0.0",
+	"description": "Raspberry Pi GPIO PWM adapter with Promises",
+	"author": "Jean Desravines <hi@jeandesravines.com> (http://www.jeandesravines.com)",
+	"scripts": {
+		"test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha",
+		"coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
+	},
+	"main": "lib/Gpio.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jeandesravines/gpio.git"
+	},
+	"bugs": {
+		"url": "https://github.com/jeandesravines/gpio/issues"
+	},
+	"keywords": [
+		"gpio",
+		"pulse width modulation",
+		"pwm",
+		"raspberry pi",
+		"promise",
+		"es6"
+	],
+	"devDependencies": {
+		"chai": "^3.5.0",
+		"istanbul": "^0.4.2",
+		"coveralls": "^2.11.11",
+		"mocha": "^2.5.3"
+	},
+	"homepage": "https://github.com/jeandesravines/gpio",
+	"license": "MIT",
+	"engines": {
+		"node": ">=6.2.2"
+	}
+}
