@@ -1,11 +1,11 @@
 {
-	"name": "jdes-gpio",
+	"name": "@jdes/gpio",
 	"private": true,
 	"version": "1.0.0",
 	"description": "Raspberry Pi GPIO PWM adapter with Promises",
 	"author": "Jean Desravines <hi@jeandesravines.com> (http://www.jeandesravines.com)",
 	"scripts": {
-		"test": "sudo ./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha"
+		"test": "sudo ./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha -- -R spec"
 	},
 	"main": "lib/Gpio.js",
 	"repository": {
