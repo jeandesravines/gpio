@@ -1,36 +1,39 @@
 {
-	"name": "@jdes/gpio",
-	"private": true,
-	"version": "1.0.0",
-	"description": "Raspberry Pi GPIO PWM adapter with Promises",
-	"author": "Jean Desravines <hi@jeandesravines.com> (http://www.jeandesravines.com)",
-	"scripts": {
-		"test": "sudo ./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha -- -R spec"
-	},
-	"main": "lib/Gpio.js",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/jeandesravines/gpio.git"
-	},
-	"bugs": {
-		"url": "https://github.com/jeandesravines/gpio/issues"
-	},
-	"keywords": [
-		"gpio",
-		"pulse width modulation",
-		"pwm",
-		"raspberry pi",
-		"promise",
-		"es6"
-	],
-	"devDependencies": {
-		"chai": "^3.5.0",
-		"istanbul": "^0.4.2",
-		"mocha": "^2.5.3"
-	},
-	"homepage": "https://github.com/jeandesravines/gpio",
-	"license": "MIT",
-	"engines": {
-		"node": ">=6.2.2"
-	}
+  "name": "@jdes/gpio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Raspberry Pi GPIO PWM adapter with Promises",
+  "author": "Jean Desravines <hi@jeandesravines.com> (http://www.jeandesravines.com)",
+  "scripts": {
+    "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha -- -R spec",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "main": "lib/helper/gpio.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeandesravines/gpio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jeandesravines/gpio/issues"
+  },
+  "keywords": [
+    "gpio",
+    "pulse width modulation",
+    "pwm",
+    "raspberry pi",
+    "promise",
+    "es6"
+  ],
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.2",
+    "mkdirp": "^0.5.1",
+    "mocha": "^2.5.3",
+    "rimraf": "^2.5.4"
+  },
+  "homepage": "https://github.com/jeandesravines/gpio",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6.2.2"
+  }
 }
