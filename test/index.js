@@ -1,12 +1,13 @@
-'use strict';
-
 /**
  * Copyright 2016 Jean Desravines <hi@jeandesravines.com>
  */
 
-const {after, before, afterEach, beforeEach, describe, it} = require('mocha');
+'use strict';
+
+const {afterEach, beforeEach, describe, it} = require('mocha');
 const {expect, should} = require('chai');
 const fs = require('fs');
+const promisify = require('../lib/module/promisify');
 const rimraf = require('rimraf');
 const Gpio = require('../lib/helper/gpio');
 const NotFoundError = require('../lib/error/not-found-error');
@@ -26,43 +27,31 @@ describe('Gpio', () => {
 	 */
 	const path = '.gpio.tmp';
 
+
+	/* Hooks */
+
 	beforeEach('Instantiate and open 7th channel to out', () => {
-		return new Promise((resolve, reject) => {
-			rimraf(path, {}, (error) => {
-				error ? reject(error) : resolve();
-			})
-
-		}).then(() => new Promise((resolve, reject) => {
-			fs.mkdir(path, {}, (error) => {
-				error ? reject(error) : resolve();
-			})
-
-		})).then(() => Promise.all(Object.keys(Gpio.mapping).map((channel) => {
-			return new Promise((resolve, reject) => {
-				fs.mkdir(path + '/' + Gpio.mapping[channel], (error) => {
-					error ? reject(error) : resolve();
-				});
+		return promisify(rimraf)(path, {})
+			.then(() => promisify(fs.mkdir)(path))
+			.then(() => Promise.all(Object.keys(Gpio.mapping).map((channel) => {
+				return promisify(fs.mkdir)(path + '/' + Gpio.mapping[channel])
+			})))
+			.then(() => {
+				return (gpio = new Gpio(path)).open(7, Gpio.direction.out);
 			});
-
-		}))).then(() => {
-			gpio = new Gpio(path);
-
-			return gpio.open(7, Gpio.direction.out);
-		});
 	});
 
 	afterEach('Close', () => {
 		return gpio.close(7)
-			.then(() => new Promise((resolve, reject) => {
-				rimraf(path, {}, (error) => {
-					error ? reject(error) : resolve();
-				});
-			}));
+			.then(() => promisify(rimraf)(path, {}));
 	});
+
+
+	/* Tests */
 
 	describe('FileSystem', () => {
 		describe('read', () => {
-			it('should catch an error on read with a wrong path', () => {
+			it('should reject on read with a wrong path', () => {
 				return gpio.readFile('directory/unknown')
 					.then(() => Promise.reject())
 					.catch(() => Promise.resolve());
@@ -70,15 +59,31 @@ describe('Gpio', () => {
 		});
 
 		describe('write', () => {
-			it('should catch an error on write with a wrong path', () => {
+			it('should reject on write with a wrong path', () => {
 				return gpio.writeFile('directory/unknown', '')
 					.then(() => Promise.reject())
 					.catch(() => Promise.resolve());
 			});
 		});
+
+		describe('exists', () => {
+			it('should exists', () => {
+				expect(Gpio.exists('.')).to.be.equal(true);
+			});
+		})
 	});
 
 	describe('Config', () => {
+		describe('Instantiate', () => {
+			it('should create or throw an error', () => {
+				try {
+					expect(new Gpio()).to.be.instanceOf(Gpio);
+				} catch (e) {
+					expect(e).to.be.instanceOf(NotFoundError);
+				}
+			});
+		});
+
 		describe('Pin Mapping', () => {
 			it('should throw an error if get a pin on a unknown channel', () => {
 				expect(() => {
@@ -197,7 +202,7 @@ describe('Gpio', () => {
 
 			it('set value to ~0.5', () => {
 				return gpio.setAnalogValue(7, 0.5, 100)
-					.then(() => gpio.getAnalogValue(7))
+					.then(() => gpio.getAnalogValue(7, 200))
 					.then((value) => {
 						expect(value).to.be.within(0.4, 0.6);
 					});
