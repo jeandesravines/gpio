@@ -7,13 +7,13 @@
 const {afterEach, beforeEach, describe, it} = require('mocha');
 const {expect, should} = require('chai');
 const fs = require('fs');
-const promisify = require('../lib/module/promisify');
+const promisify = require('../../lib/module/promisify');
 const rimraf = require('rimraf');
-const Gpio = require('../lib/helper/gpio');
-const NotFoundError = require('../lib/error/not-found-error');
-const UnknownChannelError = require('../lib/error/unknown-channel-error');
-const UnknownEdgeError = require('../lib/error/unknown-edge-error');
-const UnknownDirectionError = require('../lib/error/unknown-direction-error');
+const Gpio = require('../../lib/helper/gpio');
+const NotFoundError = require('../../lib/error/not-found-error');
+const UnknownChannelError = require('../../lib/error/unknown-channel-error');
+const UnknownEdgeError = require('../../lib/error/unknown-edge-error');
+const UnknownDirectionError = require('../../lib/error/unknown-direction-error');
 
 describe('Gpio', () => {
 	/**
@@ -86,9 +86,7 @@ describe('Gpio', () => {
 
 		describe('Pin Mapping', () => {
 			it('should throw an error if get a pin on a unknown channel', () => {
-				expect(() => {
-					const _ = gpio.pins[30];
-				}).to.throw(UnknownChannelError);
+				expect(() => gpio.pins[30]).to.throw(UnknownChannelError);
 			});
 
 			it('should return 4', () => {
