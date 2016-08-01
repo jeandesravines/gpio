@@ -5,7 +5,7 @@
   "description": "Raspberry Pi GPIO PWM adapter with Promises",
   "author": "Jean Desravines <hi@jeandesravines.com> (http://www.jeandesravines.com)",
   "scripts": {
-    "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha -- -R spec",
+    "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha -- --recursive",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "main": "lib/helper/gpio.js",
@@ -25,6 +25,7 @@
     "es6"
   ],
   "devDependencies": {
+    "@jdes/promisify": "^1.0.0",
     "chai": "^3.5.0",
     "istanbul": "^0.4.2",
     "mocha": "^2.5.3",
