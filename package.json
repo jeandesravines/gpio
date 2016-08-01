@@ -25,6 +25,7 @@
     "es6"
   ],
   "devDependencies": {
+    "@jdes/promisify": "^1.0.0",
     "chai": "^3.5.0",
     "istanbul": "^0.4.2",
     "mocha": "^2.5.3",

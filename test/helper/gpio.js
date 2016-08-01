@@ -7,7 +7,7 @@
 const {afterEach, beforeEach, describe, it} = require('mocha');
 const {expect, should} = require('chai');
 const fs = require('fs');
-const promisify = require('../../lib/module/promisify');
+const promisify = require('@jdes/promisify');
 const rimraf = require('rimraf');
 const Gpio = require('../../lib/helper/gpio');
 const NotFoundError = require('../../lib/error/not-found-error');
