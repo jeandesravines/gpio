@@ -10,7 +10,6 @@ const fs = require('fs');
 const promisify = require('@jdes/promisify');
 const rimraf = require('rimraf');
 const Gpio = require('../../lib/helper/gpio');
-const NotFoundError = require('../../lib/error/not-found-error');
 const UnknownChannelError = require('../../lib/error/unknown-channel-error');
 const UnknownEdgeError = require('../../lib/error/unknown-edge-error');
 const UnknownDirectionError = require('../../lib/error/unknown-direction-error');
@@ -22,13 +21,25 @@ describe('Gpio', () => {
 	let gpio;
 
 	/**
-	 *
+	 * @readonly
 	 * @type {string}
 	 */
 	const path = '.gpio.tmp';
 
+	/**
+	 * @readonly
+	 * @type {Object.<string, *>}
+	 */
+	let config = {
+		path: Gpio.path
+	};
+
 
 	/* Hooks */
+
+	beforeEach(() => {
+		Gpio.path = path;
+	});
 
 	beforeEach('Instantiate and open 7th channel to out', () => {
 		return promisify(rimraf)(path, {})
@@ -36,14 +47,17 @@ describe('Gpio', () => {
 			.then(() => Promise.all(Object.keys(Gpio.mapping).map((channel) => {
 				return promisify(fs.mkdir)(path + '/' + Gpio.mapping[channel])
 			})))
-			.then(() => {
-				return (gpio = new Gpio(path)).open(7, Gpio.direction.out);
-			});
+			.then(() => gpio = new Gpio())
+			.then(() => gpio.open(7, Gpio.direction.out));
 	});
 
 	afterEach('Close', () => {
 		return gpio.close(7)
 			.then(() => promisify(rimraf)(path, {}));
+	});
+
+	afterEach(() => {
+		Gpio.path = config.path;
 	});
 
 
@@ -52,7 +66,7 @@ describe('Gpio', () => {
 	describe('FileSystem', () => {
 		describe('read', () => {
 			it('should reject on read with a wrong path', () => {
-				return gpio.readFile('directory/unknown')
+				return Gpio.readFile('directory/unknown')
 					.then(() => Promise.reject())
 					.catch(() => Promise.resolve());
 			});
@@ -60,7 +74,7 @@ describe('Gpio', () => {
 
 		describe('write', () => {
 			it('should reject on write with a wrong path', () => {
-				return gpio.writeFile('directory/unknown', '')
+				return Gpio.writeFile('directory/unknown', '')
 					.then(() => Promise.reject())
 					.catch(() => Promise.resolve());
 			});
@@ -70,27 +84,21 @@ describe('Gpio', () => {
 			it('should exists', () => {
 				expect(Gpio.exists('.')).to.be.equal(true);
 			});
+
+			it('should not exists', () => {
+				expect(Gpio.exists('.unknown')).to.be.equal(false);
+			});
 		})
 	});
 
 	describe('Config', () => {
-		describe('Instantiate', () => {
-			it('should create or throw an error', () => {
-				try {
-					expect(new Gpio()).to.be.instanceOf(Gpio);
-				} catch (e) {
-					expect(e).to.be.instanceOf(NotFoundError);
-				}
-			});
-		});
-
 		describe('Pin Mapping', () => {
 			it('should throw an error if get a pin on a unknown channel', () => {
-				expect(() => gpio.pins[30]).to.throw(UnknownChannelError);
+				expect(() => Gpio.pins[30]).to.throw(UnknownChannelError);
 			});
 
 			it('should return 4', () => {
-				expect(gpio.pins[7]).to.be.equal(4);
+				expect(Gpio.pins[7]).to.be.equal(4);
 			});
 		});
 
@@ -105,24 +113,20 @@ describe('Gpio', () => {
 						expect(value).to.satisfy(Number.isInteger);
 					});
 			});
-
-			it('should catch an error on open with a wrong path', () => {
-				expect(() => {
-					const _ = new Gpio('/dev/null/unknown');
-				}).to.throw(NotFoundError);
-			});
 		});
 	});
 
 	describe('Edit', () => {
 		describe('Direction', () => {
 			it('should throw an error', () => {
-				expect(() => {
-					gpio.setDirection(7, 'unknown');
-				}).to.throw(UnknownDirectionError);
+				gpio.setDirection(7, 'unknown')
+					.then(() => Promise.reject())
+					.catch((error) => {
+						expect(error).to.be.a(UnknownDirectionError)
+					});
 			});
 
-			for (let i in Gpio.direction) {
+			Object.keys(Gpio.direction).forEach((i) => {
 				const value = Gpio.direction[i];
 
 				it(`should set to ${value}`, () => {
@@ -132,17 +136,19 @@ describe('Gpio', () => {
 							expect(value).to.be.equal(value);
 						});
 				});
-			}
+			});
 		});
 
 		describe('Edge', () => {
 			it('should throw an error', () => {
-				expect(() => {
-					gpio.setEdge(7, 'unknown');
-				}).to.throw(UnknownEdgeError);
+				gpio.setEdge(7, 'unknown')
+					.then(() => Promise.reject())
+					.catch((error) => {
+						expect(error).to.be.a(UnknownEdgeError)
+					});
 			});
 
-			for (let i in Gpio.edge) {
+			Object.keys(Gpio.edge).forEach((i) => {
 				const value = Gpio.edge[i];
 
 				it(`should set to ${value}`, () => {
@@ -152,7 +158,7 @@ describe('Gpio', () => {
 							expect(value).to.be.equal(value);
 						});
 				});
-			}
+			});
 		});
 
 		describe('Path', () => {
@@ -171,10 +177,10 @@ describe('Gpio', () => {
 					});
 			});
 
-			for (let i in Gpio.direction) {
+			Object.keys(Gpio.direction).forEach((i) => {
 				const direction = Gpio.direction[i];
 
-				for (let j in Gpio.signal) {
+				Object.keys(Gpio.signal).forEach((j) => {
 					const signal = Gpio.signal[j];
 
 					it(`should set to ${signal} to an ${direction} channel`, () => {
@@ -185,8 +191,8 @@ describe('Gpio', () => {
 								expect(value).to.be.equal(signal);
 							});
 					});
-				}
-			}
+				});
+			});
 		});
 
 		describe('Analog', () => {
