@@ -41,7 +41,7 @@ Instantiate:
 /**
  * @type {Gpio}
  */
-let gpio = new Gpio();
+const gpio = new Gpio();
 ```
 
 Before all operations on channel, you have to open it with `gpio.open(channel: number, direction: string): Promise`
@@ -50,10 +50,10 @@ Example:
 
 ```javascript
 // Import
-const Gpio = require('@jdes/gpio'):
+const Gpio = require('@jdes/gpio');
 
 // Instantiate
-let gpio = new Gpio();
+const gpio = new Gpio();
 
 // Open the channel 7 on write mode
 // and write an analog value
@@ -265,7 +265,7 @@ gpio.setDirection(7, Gpio.direction.out)
 
 ```javascript
 const Gpio = require('@jdes/gpio');
-let gpio = new Gpio();
+const gpio = new Gpio();
 
 // Open the channel 3 in read mode
 gpio.open(3, Gpio.direction.in)
