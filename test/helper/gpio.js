@@ -208,7 +208,7 @@ describe('Gpio', () => {
 				return gpio.setAnalogValue(7, 0.5, 100)
 					.then(() => gpio.getAnalogValue(7, 200))
 					.then((value) => {
-						expect(value).to.be.within(0.4, 0.6);
+						expect(value).to.be.closeTo(0.5, 0.05);
 					});
 			});
 		});
