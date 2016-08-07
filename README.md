@@ -1,6 +1,6 @@
 # Gpio
 
-Control Raspberry Pi GPIO pins with NodeJS and ES6 Promises.
+Control Raspberry Pi GPIO pins with Node.js and ES6 Promises.
 
 
 ## Table of contents
