@@ -45,7 +45,8 @@ describe('Gpio', () => {
 		return promisify(rimraf)(path, {})
 			.then(() => promisify(fs.mkdir)(path))
 			.then(() => Promise.all(Object.keys(Gpio.mapping).map((channel) => {
-				return promisify(fs.mkdir)(path + '/' + Gpio.mapping[channel])
+				return promisify(rimraf)(path + '/' + Gpio.mapping[channel], {})
+					.then(() => promisify(fs.mkdir)(path + '/' + Gpio.mapping[channel]));
 			})))
 			.then(() => gpio = new Gpio())
 			.then(() => gpio.open(7, Gpio.direction.out));
