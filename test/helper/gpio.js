@@ -92,6 +92,22 @@ describe('Gpio', () => {
 	});
 
 	describe('Config', () => {
+		describe('Revision', () => {
+			const cpuinfo = path + '/cpuinfo';
+
+			beforeEach('Create the file', () => {
+				return promisify(fs.writeFile)(cpuinfo, 'Revision   : 000f');
+			});
+
+			it('should returns 15', () => {
+				expect(Gpio.getRevision(cpuinfo)).to.be.equal(15);
+			});
+
+			it('should returns 0 with a wrong path', () => {
+				expect(Gpio.getRevision('directory/unknown')).to.be.equal(0);
+			});
+		});
+
 		describe('Pin Mapping', () => {
 			it('should throw an error if get a pin on a unknown channel', () => {
 				expect(() => Gpio.pins[30]).to.throw(UnknownChannelError);
@@ -207,7 +223,7 @@ describe('Gpio', () => {
 				return gpio.setAnalogValue(7, 0.5, 100)
 					.then(() => gpio.getAnalogValue(7, 200))
 					.then((value) => {
-						expect(value).to.be.closeTo(0.5, 0.05);
+						expect(value).to.be.closeTo(0.5, 0.1);
 					});
 			});
 		});
