@@ -178,9 +178,8 @@ describe('Gpio', () => {
 			});
 
 			Object.keys(Gpio.direction).forEach((i) => {
-				const direction = Gpio.direction[i];
-
 				Object.keys(Gpio.signal).forEach((j) => {
+					const direction = Gpio.direction[i];
 					const signal = Gpio.signal[j];
 
 					it(`should set to ${signal} to an ${direction} channel`, () => {
