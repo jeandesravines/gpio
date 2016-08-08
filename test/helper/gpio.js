@@ -7,8 +7,8 @@
 const {afterEach, beforeEach, describe, it} = require('mocha');
 const {expect, should} = require('chai');
 const fs = require('fs');
-const promisify = require('@jdes/promisify');
 const rimraf = require('rimraf');
+const promisify = require('@jdes/promisify');
 const Gpio = require('../../lib/helper/gpio');
 const UnknownChannelError = require('../../lib/error/unknown-channel-error');
 const UnknownEdgeError = require('../../lib/error/unknown-edge-error');
@@ -31,7 +31,8 @@ describe('Gpio', () => {
 	 * @type {Object.<string, *>}
 	 */
 	let config = {
-		path: Gpio.path
+		path: Gpio.path,
+		revision: Gpio.revision
 	};
 
 
@@ -58,6 +59,7 @@ describe('Gpio', () => {
 
 	afterEach(() => {
 		Gpio.path = config.path;
+		Gpio.revision = config.revision;
 	});
 
 
@@ -92,13 +94,67 @@ describe('Gpio', () => {
 	});
 
 	describe('Config', () => {
-		describe('Pin Mapping', () => {
-			it('should throw an error if get a pin on a unknown channel', () => {
-				expect(() => Gpio.pins[30]).to.throw(UnknownChannelError);
+		describe('Revision', () => {
+			const cpuinfo = path + '/cpuinfo';
+
+			beforeEach('Create the file', () => {
+				return promisify(fs.writeFile)(cpuinfo, 'Revision   : 000a');
 			});
 
-			it('should return 4', () => {
-				expect(Gpio.pins[7]).to.be.equal(4);
+			it('should returns 10', () => {
+				expect(Gpio.getRevision(cpuinfo)).to.be.equal(0x0A);
+			});
+
+			it('should returns 15 with a wrong path', () => {
+				expect(Gpio.getRevision('directory/unknown')).to.be.equal(15);
+			});
+
+			it('should return the default mapping', () => {
+				expect(Gpio.getMapping()).to.be.an('object');
+			});
+
+			it('should returns 0 with a correct path and an incorrect file', () => {
+				return promisify(fs.writeFile)(cpuinfo, '')
+					.then(() => {
+						expect(Gpio.getRevision(cpuinfo)).to.be.equal(0);
+					});
+			});
+		});
+
+		describe('Pin Mapping', () => {
+			it('should do not have duplicate', () => {
+				const revisions = Object.keys(Gpio.mappings);
+				const result = {};
+
+				for (let i = 0, has = false; i < revisions && false === has; i++) {
+					const values = [];
+					const mapping = Gpio.mappings[i];
+					const keys = Object.keys(Object.assign(result, mapping));
+
+					expect(has = keys.some((key, index) => {
+						return values.splice(index, 0, key).indexOf(key) < index;
+					})).to.be.equal(false);
+				}
+			});
+
+			it('should only have keys € [0;40]', () => {
+				Object.keys(Gpio.mappings).forEach((revision) => {
+					Object.keys(Gpio.mappings[revision]).forEach((key) => {
+						expect(key).to.be.within(0, 40);
+					});
+				});
+			});
+
+			it('should only have values € [0;27]', () => {
+				Object.keys(Gpio.mappings).forEach((revision) => {
+					Object.keys(Gpio.mappings[revision]).forEach((key) => {
+						expect(Gpio.mappings[revision][key]).to.be.within(0, 27);
+					});
+				});
+			});
+
+			it('should throw an error if get a pin on a unknown channel', () => {
+				expect(() => Gpio.pins[30]).to.throw(UnknownChannelError);
 			});
 		});
 
@@ -207,7 +263,7 @@ describe('Gpio', () => {
 				return gpio.setAnalogValue(7, 0.5, 100)
 					.then(() => gpio.getAnalogValue(7, 200))
 					.then((value) => {
-						expect(value).to.be.closeTo(0.5, 0.05);
+						expect(value).to.be.closeTo(0.5, 0.1);
 					});
 			});
 		});
