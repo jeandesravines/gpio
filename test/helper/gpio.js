@@ -7,7 +7,7 @@
 const {afterEach, beforeEach, describe, it} = require('mocha');
 const {expect, should} = require('chai');
 const fs = require('fs');
-const rimraf = require('rimraf');
+const fse = require('fs-extra');
 const promisify = require('@jdes/promisify');
 const Gpio = require('../../lib/helper/gpio');
 const UnknownChannelError = require('../../lib/error/unknown-channel-error');
@@ -43,10 +43,9 @@ describe('Gpio', () => {
 	});
 
 	beforeEach('Instantiate and open 7th channel to out', () => {
-		return promisify(rimraf)(path, {})
-			.then(() => promisify(fs.mkdir)(path))
+		return promisify(fse.remove)(path)
 			.then(() => Promise.all(Object.keys(Gpio.mapping).map((channel) => {
-				return promisify(fs.mkdir)(path + '/' + Gpio.mapping[channel])
+				return promisify(fse.mkdirs)(path + '/' + Gpio.mapping[channel])
 			})))
 			.then(() => gpio = new Gpio())
 			.then(() => gpio.open(7, Gpio.direction.out));
@@ -54,7 +53,7 @@ describe('Gpio', () => {
 
 	afterEach('Close', () => {
 		return gpio.close(7)
-			.then(() => promisify(rimraf)(path, {}));
+			.then(() => promisify(fse.remove)(path));
 	});
 
 	afterEach(() => {
@@ -252,15 +251,15 @@ describe('Gpio', () => {
 
 		describe('Analog', () => {
 			it('set value to low signal', () => {
-				return gpio.setAnalogValue(7, Gpio.signal.low, 100);
+				return gpio.setAnalogValue(7, Gpio.signal.low);
 			});
 
 			it('set value to high signal', () => {
-				return gpio.setAnalogValue(7, Gpio.signal.high, 100);
+				return gpio.setAnalogValue(7, Gpio.signal.high);
 			});
 
 			it('set value to ~0.5', () => {
-				return gpio.setAnalogValue(7, 0.5, 100)
+				return gpio.setAnalogValue(7, 0.5)
 					.then(() => gpio.getAnalogValue(7, 200))
 					.then((value) => {
 						expect(value).to.be.closeTo(0.5, 0.1);
