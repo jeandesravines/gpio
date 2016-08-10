@@ -1,7 +1,7 @@
 {
 	"name": "@jdes/gpio",
 	"private": true,
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Raspberry Pi GPIO PWM adapter with Promises",
 	"author": "Jean Desravines <hi@jeandesravines.com> (http://www.jeandesravines.com)",
 	"scripts": {
@@ -28,9 +28,9 @@
 		"@jdes/promisify": "^1.0.0",
 		"chai": "^3.5.0",
 		"coveralls": "^2.11.11",
+		"fs-extra": "^0.30.0",
 		"istanbul": "^0.4.2",
-		"mocha": "^3.0.1",
-		"rimraf": "^2.5.4"
+		"mocha": "^3.0.1"
 	},
 	"homepage": "https://github.com/jeandesravines/gpio",
 	"license": "MIT",
