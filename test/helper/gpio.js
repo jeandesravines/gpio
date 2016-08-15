@@ -155,6 +155,14 @@ describe('Gpio', () => {
 			it('should throw an error if get a pin on a unknown channel', () => {
 				expect(() => Gpio.pins[30]).to.throw(UnknownChannelError);
 			});
+
+			it('should have the channel', () => {
+				expect(Gpio.hasChannel(5)).to.be.equal(true);
+			});
+
+			it('should not have the channel', () => {
+				expect(Gpio.hasChannel(-1)).to.be.equal(false);
+			});
 		});
 
 		describe('Open', () => {
