@@ -97,25 +97,25 @@ describe('Gpio', () => {
 			const cpuinfo = path + '/cpuinfo';
 
 			beforeEach('Create the file', () => {
-				return promisify(fs.writeFile)(cpuinfo, 'Revision   : 000a');
+				return promisify(fs.writeFile)(cpuinfo, 'Revision   : 000d');
 			});
 
-			it('should returns 10', () => {
-				expect(Gpio.getRevision(cpuinfo)).to.be.equal(0x0A);
+			it('should returns 2', () => {
+				expect(Gpio.getRevision(cpuinfo)).to.be.equal(2);
 			});
 
-			it('should returns 15 with a wrong path', () => {
-				expect(Gpio.getRevision('directory/unknown')).to.be.equal(15);
+			it('should returns 3 with a wrong path', () => {
+				expect(Gpio.getRevision('directory/unknown')).to.be.equal(3);
 			});
 
 			it('should return the default mapping', () => {
 				expect(Gpio.getMapping()).to.be.an('object');
 			});
 
-			it('should returns 0 with a correct path and an incorrect file', () => {
+			it('should returns 3 with a correct path and an incorrect file', () => {
 				return promisify(fs.writeFile)(cpuinfo, '')
 					.then(() => {
-						expect(Gpio.getRevision(cpuinfo)).to.be.equal(0);
+						expect(Gpio.getRevision(cpuinfo)).to.be.equal(3);
 					});
 			});
 		});
@@ -224,9 +224,9 @@ describe('Gpio', () => {
 			});
 		});
 
-		describe('Path', () => {
-			expect(Gpio.paths.v1).to.be.equal('/sys/devices/virtual/gpio');
-			expect(Gpio.paths.v2).to.be.equal('/sys/class/gpio');
+		describe('Paths', () => {
+			expect(Gpio.paths[0]).to.be.equal('/sys/devices/virtual/gpio');
+			expect(Gpio.paths[1]).to.be.equal('/sys/class/gpio');
 		});
 	});
 

@@ -10,6 +10,7 @@ Control Raspberry Pi GPIO pins with Node.js and ES6 Promises.
 * [API](#api)
     * [Constants](#constants) 
     * [Methods](#methods) 
+* [Example](#example) 
 * [Contributing](#contributing) 
 * [Tests](#tests)
  
@@ -182,7 +183,7 @@ gpio.setValue(7, Gpio.signal.high)
     });
 ```
 
-#### getAnalogValue(channel: number [, duration = 500]): Promise
+#### getAnalogValue(channel: number [, duration: number = 500]): Promise
 
 * `channel`: Reference to the pin in the current mode's schema.
 * `duration`: The duration (in ms) of computing
@@ -289,10 +290,12 @@ gpio.open(3, Gpio.direction.in)
     });
 ```
 
+
 ## Contributing
 
 Contributions are appreciated, both in the form of bug reports and pull requests.
 All pull requests have to pass tests and have a sufficient coverage.
+
 
 ## Tests
 
@@ -300,7 +303,6 @@ You can run the tests with npm:
 ```shell
 $ npm test
 ```
-
 
 The tests use [Mocha](http://mochajs.org) as the test framework and [Chai](http://http://chaijs.com) as the BDD assertion framework.
 The coverage is measured with [Istanbul](https://github.com/gotwarlost/istanbul).
