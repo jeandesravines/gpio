@@ -28,7 +28,7 @@
 		"@jdes/catcher": "^1.0.0",
 		"@jdes/promisify": "^1.0.0",
 		"fs-extra": "^0.30.0"
-	}
+	},
 	"devDependencies": {
 		"chai": "^3.5.0",
 		"coveralls": "^2.11.11",
