@@ -1,5 +1,8 @@
 # Gpio
 
+[![Build Status](https://travis-ci.org/jeandesravines/gpio.svg)](https://travis-ci.org/jeandesravines/gpio)
+[![Coverage Status](https://coveralls.io/repos/github/jeandesravines/gpio/badge.svg?branch=master)](https://coveralls.io/github/jeandesravines/gpio?branch=master)
+
 Control Raspberry Pi GPIO pins with Node.js and ES6 Promises.
 
 
