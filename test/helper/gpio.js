@@ -45,7 +45,7 @@ describe('Gpio', () => {
 	beforeEach('Instantiate and open 7th channel to out', () => {
 		return promisify(fse.remove)(path)
 			.then(() => Promise.all(Object.keys(Gpio.mapping).map((channel) => {
-				return promisify(fse.mkdirs)(path + '/' + Gpio.mapping[channel])
+				return promisify(fse.mkdirs)(`${path}/gpio${Gpio.mapping[channel]}`)
 			})))
 			.then(() => gpio = new Gpio())
 			.then(() => gpio.open(7, Gpio.direction.out));
@@ -94,7 +94,7 @@ describe('Gpio', () => {
 
 	describe('Config', () => {
 		describe('Revision', () => {
-			const cpuinfo = path + '/cpuinfo';
+			const cpuinfo = `${path}/cpuinfo`;
 
 			beforeEach('Create the file', () => {
 				return promisify(fs.writeFile)(cpuinfo, 'Revision   : 000d');
