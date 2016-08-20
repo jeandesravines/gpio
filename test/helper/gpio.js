@@ -170,11 +170,21 @@ describe('Gpio', () => {
 				return gpio.open(7, Gpio.direction.out);
 			});
 
+			it('should throw an error with an unknown channel', () => {
+				expect(() => gpio.open(30, Gpio.direction.in)).to.throw(UnknownChannelError);
+			});
+
 			it('should be open on channel 7', () => {
 				return gpio.getValue(7)
 					.then((value) => {
 						expect(value).to.satisfy(Number.isInteger);
 					});
+			});
+		});
+
+		describe('Exit', () => {
+			it('should close all', () => {
+				return gpio.closeAll();
 			});
 		});
 	});
