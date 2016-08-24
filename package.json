@@ -1,7 +1,7 @@
 {
 	"name": "@jdes/gpio",
 	"private": true,
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"description": "Raspberry Pi GPIO PWM adapter with Promises",
 	"author": "Jean Desravines <hi@jeandesravines.com> (http://www.jeandesravines.com)",
 	"scripts": {
@@ -25,7 +25,7 @@
 		"es6"
 	],
 	"dependencies": {
-		"@jdes/catcher": "^1.0.0",
+		"@jdes/catcher": "^2.0.0",
 		"@jdes/promisify": "^1.0.0",
 		"fs-extra": "^0.30.0"
 	},
