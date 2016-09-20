@@ -30,7 +30,7 @@ describe('Gpio', () => {
 	 * @readonly
 	 * @type {Object.<string, *>}
 	 */
-	let config = {
+	const config = {
 		path: Gpio.path,
 		revision: Gpio.revision
 	};
