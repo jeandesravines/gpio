@@ -22,7 +22,7 @@ Control Raspberry Pi GPIO pins with Node.js and ES6 Promises.
 
 This module can then be installed with npm:
 ```shell
-$ npm install @jdes/gpio
+npm install @jdes/gpio
 ```
 
 
@@ -186,7 +186,7 @@ gpio.setValue(7, Gpio.signal.high)
     });
 ```
 
-#### getAnalogValue(channel: number [, duration: number = 500]): Promise
+#### getAnalogValue(channel: number, [duration: number = 500]): Promise
 
 * `channel`: Reference to the pin in the current mode's schema.
 * `duration`: The duration (in ms) of computing
@@ -304,7 +304,7 @@ All pull requests have to pass tests and have a sufficient coverage.
 
 You can run the tests with npm:
 ```shell
-$ npm test
+npm test
 ```
 
 The tests use [Mocha](http://mochajs.org) as the test framework and [Chai](http://http://chaijs.com) as the BDD assertion framework.
