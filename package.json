@@ -1,11 +1,7 @@
 {
 	"name": "@jdes/gpio",
 	"private": true,
-<<<<<<< HEAD
 	"version": "1.0.9",
-=======
-	"version": "1.0.8",
->>>>>>> master
 	"description": "Raspberry Pi GPIO PWM adapter with Promises",
 	"author": "Jean Desravines <hi@jeandesravines.com> (http://www.jeandesravines.com)",
 	"scripts": {
