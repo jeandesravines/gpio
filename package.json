@@ -1,12 +1,16 @@
 {
 	"name": "@jdes/gpio",
 	"private": true,
-	"version": "1.0.9",
+	"version": "1.0.91",
 	"description": "Raspberry Pi GPIO PWM adapter with Promises",
 	"author": "Jean Desravines <hi@jeandesravines.com> (http://www.jeandesravines.com)",
 	"scripts": {
-		"test": "rm -rf coverage ; node_modules/istanbul/lib/cli.js cover node_modules/.bin/_mocha -- --recursive",
-		"coveralls": "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js"
+		"clean": "rm -rf coverage npm-debug.log* 2> /dev/null",
+		"coveralls": "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
+		"lint": "node_modules/.bin/eslint lib test",
+		"test": "node_modules/istanbul/lib/cli.js cover node_modules/.bin/_mocha -- --recursive",
+		"pretest": "npm run clean",
+		"commit": "commit-wizard"
 	},
 	"main": "lib/helper/gpio.js",
 	"repository": {
@@ -32,12 +36,24 @@
 	"devDependencies": {
 		"chai": "^3.5.0",
 		"coveralls": "^2.11.11",
+		"eslint": "^3.8.1",
+		"eslint-config-google": "^0.7.0",
 		"istanbul": "^0.4.2",
-		"mocha": "^3.0.1"
+		"mocha": "^3.0.1",
+		"pre-git": "^3.10.0"
 	},
 	"homepage": "https://github.com/jeandesravines/gpio",
 	"license": "MIT",
 	"engines": {
 		"node": ">=6.2.2"
+	},
+	"config": {
+		"pre-git": {
+			"commit-msg": "simple",
+			"post-checkout": "sudo npm run clean",
+			"post-commit": "git status",
+			"pre-commit": "sudo npm run lint",
+			"pre-push": "sudo npm run test"
+		}
 	}
 }

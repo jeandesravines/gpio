@@ -5,14 +5,14 @@
 'use strict';
 
 const {afterEach, beforeEach, describe, it} = require('mocha');
-const {expect, should} = require('chai');
+const {expect} = require('chai');
 const fs = require('fs');
 const fse = require('fs-extra');
 const promisify = require('@jdes/promisify');
-const Gpio = require('../../lib/helper/gpio');
-const UnknownChannelError = require('../../lib/error/unknown-channel-error');
-const UnknownEdgeError = require('../../lib/error/unknown-edge-error');
-const UnknownDirectionError = require('../../lib/error/unknown-direction-error');
+const Gpio = require('../../../lib/helper/gpio');
+const UnknownChannelError = require('../../../lib/error/unknown-channel-error');
+const UnknownEdgeError = require('../../../lib/error/unknown-edge-error');
+const UnknownDirectionError = require('../../../lib/error/unknown-direction-error');
 
 describe('Gpio', () => {
 	/**
@@ -35,10 +35,7 @@ describe('Gpio', () => {
 		revision: Gpio.revision
 	};
 
-
-	/* Hooks */
-
-	beforeEach(() => {
+	beforeEach('Assign GPIO\'s path', () => {
 		Gpio.path = path;
 	});
 
@@ -195,7 +192,7 @@ describe('Gpio', () => {
 				gpio.setDirection(7, 'unknown')
 					.then(() => Promise.reject())
 					.catch((error) => {
-						expect(error).to.be.a(UnknownDirectionError)
+						expect(error).to.be.an.instanceof(UnknownDirectionError)
 					});
 			});
 
@@ -217,7 +214,7 @@ describe('Gpio', () => {
 				gpio.setEdge(7, 'unknown')
 					.then(() => Promise.reject())
 					.catch((error) => {
-						expect(error).to.be.a(UnknownEdgeError)
+						expect(error).to.be.an.instanceof(UnknownEdgeError)
 					});
 			});
 
