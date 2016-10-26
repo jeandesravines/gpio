@@ -24,7 +24,8 @@
 		"gpio",
 		"pulse width modulation",
 		"pwm",
-		"raspberry pi",
+		"raspberry",
+		"pi",
 		"promise",
 		"es6"
 	],
@@ -50,10 +51,10 @@
 	"config": {
 		"pre-git": {
 			"commit-msg": "simple",
-			"post-checkout": "sudo npm run clean",
+			"post-checkout": "sudo npm run clean && npm install",
 			"post-commit": "git status",
-			"pre-commit": "sudo npm run lint",
-			"pre-push": "sudo npm run test"
+			"pre-commit": "sudo npm run --silent lint -- --fix",
+			"pre-push": "sudo npm run --silent test"
 		}
 	}
 }
