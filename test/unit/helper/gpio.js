@@ -32,7 +32,7 @@ describe('Gpio', () => {
 	 */
 	const config = {
 		path: Gpio.path,
-		revision: Gpio.revision
+		revision: Gpio.revision,
 	};
 
 	beforeEach('Assign GPIO\'s path', () => {
@@ -42,7 +42,7 @@ describe('Gpio', () => {
 	beforeEach('Instantiate and open 7th channel to out', () => {
 		return promisify(fse.remove)(path)
 			.then(() => Promise.all(Object.keys(Gpio.mapping).map((channel) => {
-				return promisify(fse.mkdirs)(`${path}/gpio${Gpio.mapping[channel]}`)
+				return promisify(fse.mkdirs)(`${path}/gpio${Gpio.mapping[channel]}`);
 			})))
 			.then(() => gpio = new Gpio())
 			.then(() => gpio.open(7, Gpio.direction.out));
@@ -86,7 +86,7 @@ describe('Gpio', () => {
 			it('should not exists', () => {
 				expect(Gpio.exists('.unknown')).to.be.equal(false);
 			});
-		})
+		});
 	});
 
 	describe('Config', () => {
@@ -192,7 +192,7 @@ describe('Gpio', () => {
 				gpio.setDirection(7, 'unknown')
 					.then(() => Promise.reject())
 					.catch((error) => {
-						expect(error).to.be.an.instanceof(UnknownDirectionError)
+						expect(error).to.be.an.instanceof(UnknownDirectionError);
 					});
 			});
 
@@ -214,7 +214,7 @@ describe('Gpio', () => {
 				gpio.setEdge(7, 'unknown')
 					.then(() => Promise.reject())
 					.catch((error) => {
-						expect(error).to.be.an.instanceof(UnknownEdgeError)
+						expect(error).to.be.an.instanceof(UnknownEdgeError);
 					});
 			});
 
