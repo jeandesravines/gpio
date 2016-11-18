@@ -7,7 +7,7 @@
 	"scripts": {
 		"clean": "rm -rf coverage npm-debug.log* 2> /dev/null",
 		"coveralls": "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
-		"lint": "node_modules/.bin/eslint lib test",
+		"lint": "node_modules/.bin/eslint --fix lib test",
 		"test": "node_modules/istanbul/lib/cli.js cover node_modules/.bin/_mocha -- --recursive",
 		"pretest": "npm run clean",
 		"commit": "commit-wizard"
@@ -51,10 +51,9 @@
 	"config": {
 		"pre-git": {
 			"commit-msg": "simple",
-			"post-checkout": "sudo npm run clean && npm install",
 			"post-commit": "git status",
-			"pre-commit": "sudo npm run --silent lint -- --fix",
-			"pre-push": "sudo npm run --silent test"
+			"pre-commit": "npm run --silent lint",
+			"pre-push": "npm run --silent test"
 		}
 	}
 }
