@@ -292,6 +292,65 @@ gpio.open(3, Gpio.direction.in)
     	console.error(error);
     });
 ```
+ 
+
+## Environment variables
+
+Environment variables can be passed to override the default configuration.
+
+### Frame
+
+Time in ms for computing an analog read.  
+If `PI_GPIO_FRAME = 1`, at each ms à digital read is perform and at the end, an average value of each digital read will be produce.  
+If the process has to be executed during 200ms, 200 reads will be performed and the analog value will be equal to  `countOn / 200`.
+
+
+- Options: `PI_GPIO_FRAME`
+- Type: `Number`
+- Default: `1`
+
+Example: 
+
+```shell
+sudo PI_GPIO_FRAME=1 npm start
+```
+
+### Revision
+
+The default Rapsberry Pi revision if none match.  
+It's useful to determine the GPIO mapping.
+
+- Options: `PI_GPIO_REVISION`
+- Type: `Number`
+- Default: `3`
+
+Example: 
+
+```shell
+sudo PI_GPIO_REVISION=4 npm start
+```
+
+### Frequency
+
+Frequency in Hz for execute an analog write.    
+If `PI_GPIO_FREQUENCY = 50`, during a write, 20 (1000 / 50) on-off process will be performed.  
+
+- Options: `PI_GPIO_FREQUENCY`
+- Type: `Number`
+- Default: `120`
+
+
+#### On-Off process
+If `PI_GPIO_FREQUENCY = 50` and the value to write is `0.75`, the on-off process will be performed 20 times.  
+Every 20ms it writes `1` to the pin and after 15ms (20 * 0.75) it will writes `0`.  
+
+
+
+Example: 
+
+```shell
+sudo PI_GPIO_FREQUENCY=200 npm start
+```
 
 
 ## Contributing

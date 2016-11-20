@@ -7,19 +7,14 @@
 const {afterEach, beforeEach, describe, it} = require('mocha');
 const {expect} = require('chai');
 const fs = require('fs');
-const fse = require('fs-extra');
+const fsExtra = require('fs-extra');
 const promisify = require('@jdes/promisify');
-const Gpio = require('../../../lib/helper/gpio');
-const UnknownChannelError = require('../../../lib/error/unknown-channel-error');
-const UnknownEdgeError = require('../../../lib/error/unknown-edge-error');
-const UnknownDirectionError = require('../../../lib/error/unknown-direction-error');
+const Gpio = require('../../lib/helper/gpio');
+const UnknownChannelError = require('../../lib/error/unknown-channel-error');
+const UnknownEdgeError = require('../../lib/error/unknown-edge-error');
+const UnknownDirectionError = require('../../lib/error/unknown-direction-error');
 
 describe('Gpio', () => {
-  /**
-   * @type {Gpio}
-   */
-  let gpio;
-
   /**
    * @readonly
    * @type {string}
@@ -30,19 +25,26 @@ describe('Gpio', () => {
    * @readonly
    * @type {Object.<string, *>}
    */
-  const config = {
+  const classConfiguration = {
     path: Gpio.path,
     revision: Gpio.revision,
   };
+
+  /**
+   * @type {Gpio}
+   */
+  let gpio;
+
+  /* ******************************************* */
 
   beforeEach('Assign GPIO\'s path', () => {
     Gpio.path = path;
   });
 
   beforeEach('Instantiate and open 7th channel to out', () => {
-    return promisify(fse.remove)(path)
+    return promisify(fsExtra.remove)(path)
       .then(() => Promise.all(Object.keys(Gpio.mapping).map((channel) => {
-        return promisify(fse.mkdirs)(`${path}/gpio${Gpio.mapping[channel]}`);
+        return promisify(fsExtra.mkdirs)(`${path}/gpio${Gpio.mapping[channel]}`);
       })))
       .then(() => gpio = new Gpio())
       .then(() => gpio.open(7, Gpio.direction.out));
@@ -50,16 +52,16 @@ describe('Gpio', () => {
 
   afterEach('Close', () => {
     return gpio.close(7)
-      .then(() => promisify(fse.remove)(path));
+      .then(() => promisify(fsExtra.remove)(path));
   });
 
-  afterEach(() => {
-    Gpio.path = config.path;
-    Gpio.revision = config.revision;
+  afterEach('Reset class configuration', () => {
+    Object.keys(classConfiguration).forEach((key) => {
+      Gpio[key] = classConfiguration[key];
+    });
   });
 
-
-  /* Tests */
+  /* ******************************************* */
 
   describe('FileSystem', () => {
     describe('read', () => {

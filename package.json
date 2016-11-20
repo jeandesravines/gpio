@@ -41,7 +41,8 @@
 		"eslint-config-google": "^0.7.0",
 		"istanbul": "^0.4.2",
 		"mocha": "^3.0.1",
-		"pre-git": "^3.10.0"
+		"pre-git": "^3.10.0",
+		"sinon": "^1.17.5"
 	},
 	"homepage": "https://github.com/jeandesravines/gpio",
 	"license": "MIT",
