@@ -13,9 +13,8 @@ Control Raspberry Pi GPIO pins with Node.js and ES6 Promises.
 * [API](#api)
   * [Constants](#constants) 
   * [Methods](#methods) 
-* [Example](#example) 
-* [Contributing](#contributing) 
-* [Tests](#tests)
+* [Example](#example)
+* [Environment variables](#environment-variables)
  
 
 ## Setup
