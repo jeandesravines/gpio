@@ -6,11 +6,11 @@
 	"author": "Jean Desravines <hi@jeandesravines.com> (http://www.jeandesravines.com)",
 	"scripts": {
 		"clean": "rm -rf coverage npm-debug.log* 2> /dev/null",
+		"commit": "commit-wizard",
 		"coveralls": "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
 		"lint": "node_modules/.bin/eslint --fix lib test",
-		"test": "node_modules/istanbul/lib/cli.js cover node_modules/.bin/_mocha -- --recursive",
 		"pretest": "npm run clean",
-		"commit": "commit-wizard"
+		"test": "node_modules/istanbul/lib/cli.js cover node_modules/.bin/_mocha -- --recursive"
 	},
 	"main": "lib/helper/gpio.js",
 	"repository": {
@@ -21,16 +21,16 @@
 		"url": "https://github.com/jeandesravines/gpio/issues"
 	},
 	"keywords": [
+		"es6",
 		"gpio",
+		"promise",
 		"pulse width modulation",
 		"pwm",
-		"raspberry",
-		"pi",
-		"promise",
-		"es6"
+		"raspberry pi"
 	],
 	"dependencies": {
 		"@jdes/catcher": "^2.0.0",
+		"@jdes/env-cleaner": "^1.0.0",
 		"@jdes/promisify": "^1.0.0",
 		"fs-extra": "^0.30.0"
 	},
@@ -47,7 +47,7 @@
 	"homepage": "https://github.com/jeandesravines/gpio",
 	"license": "MIT",
 	"engines": {
-		"node": ">=6.2.2"
+		"node": ">=6.0.0"
 	},
 	"config": {
 		"pre-git": {
