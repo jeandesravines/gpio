@@ -84,7 +84,7 @@ setTimeout(() => {
 
 ### Constants
 
-#### Gpio.direction: Object.<string, string>
+#### Gpio.direction: Object.\<string, string>
 
 Object representing the available directions
 
@@ -95,7 +95,7 @@ Object representing the available directions
 }
 ```
 
-#### Gpio.signal: Object.<string, number>
+#### Gpio.signal: Object.\<string, number>
 
 Object representing the available signals
 
@@ -142,7 +142,7 @@ gpio.close(7)
   });
 ```
 
-#### getValue(channel: number): Promise.<number>
+#### getValue(channel: number): Promise.\<number>
 
 * `channel`: Reference to the pin in the current mode's schema.
 * returns a `Promise.<number>` resolvde with the current value or rejected if an error occurs
@@ -172,7 +172,7 @@ Example:
 gpio.setValue(7, Gpio.signal.high);
 ```
 
-#### getAnalogValue(channel: number, [duration: number = 500]): Promise.<number>
+#### getAnalogValue(channel: number, [duration: number = 500]): Promise.\<number>
 
 * `channel`: Reference to the pin in the current mode's schema.
 * `duration`: The duration (in ms) of computing
@@ -203,7 +203,7 @@ Example:
 gpio.setAnalogValue(7, 0.75);
 ```
 
-#### getDirection(channel: number): Promise.<string>
+#### getDirection(channel: number): Promise.\<string>
 
 * `channel`: Reference to the pin in the current mode's schema.
 * returns a Promise resolved with the direction of the channel or rejected if an error occurs
