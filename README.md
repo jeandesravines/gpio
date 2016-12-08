@@ -22,7 +22,7 @@ Control Raspberry Pi GPIO pins with Node.js and ES6 Promises.
 This module can then be installed with npm:
 ```shell
 # npm install @jdes/gpio # unavailable during beta
-# npm install git://github.com/jeandesravines/gpio
+npm install git://github.com/jeandesravines/gpio
 ```
 
 
