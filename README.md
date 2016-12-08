@@ -1,7 +1,7 @@
-# Gpio
+# Gpio (Beta)
 
 [![Build Status](https://travis-ci.org/jeandesravines/gpio.svg)](https://travis-ci.org/jeandesravines/gpio)
-[![Coverage Status](https://coveralls.io/repos/github/jeandesravines/gpio/badge.svg?branch=master)](https://coveralls.io/github/jeandesravines/gpio?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/jeandesravines/gpio/badge.svg)](https://coveralls.io/github/jeandesravines/gpio)
 
 Control Raspberry Pi GPIO pins with Node.js and ES6 Promises.
 
@@ -21,13 +21,14 @@ Control Raspberry Pi GPIO pins with Node.js and ES6 Promises.
 
 This module can then be installed with npm:
 ```shell
-npm install @jdes/gpio
+# npm install @jdes/gpio # unavailable during beta
+# npm install git://github.com/jeandesravines/gpio
 ```
 
 
 ## Usage
 
-**!! IMPORTANT !!** You must run your application as root or with sudo to use the Raspberry's GPIO.
+**!! IMPORTANT !!** You must run your application as root to use the Raspberry's GPIO.
 
 Import module:
 
