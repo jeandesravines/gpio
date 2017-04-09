@@ -1,13 +1,12 @@
 /**
- * Copyright 2016 Jean Desravines <hi@jeandesravines.com>
+ * Copyright 2017 Jean Desravines <hi@jeandesravines.com>
  */
 
 'use strict';
 
 const {afterEach, beforeEach, describe, it} = require('mocha');
 const {expect} = require('chai');
-const fs = require('fs');
-const fsExtra = require('fs-extra');
+const fs = require('fs-extra');
 const promisify = require('@jdes/promisify');
 const Gpio = require('../../lib/helper/gpio');
 const UnknownChannelError = require('../../lib/error/unknown-channel-error');
@@ -42,9 +41,9 @@ describe('Gpio', () => {
   });
 
   beforeEach('Instantiate and open 7th channel to out', () => {
-    return promisify(fsExtra.remove)(path)
+    return promisify(fs.remove)(path)
       .then(() => Promise.all(Object.keys(Gpio.mapping).map((channel) => {
-        return promisify(fsExtra.mkdirs)(`${path}/gpio${Gpio.mapping[channel]}`);
+        return promisify(fs.mkdirs)(`${path}/gpio${Gpio.mapping[channel]}`);
       })))
       .then(() => gpio = new Gpio())
       .then(() => gpio.open(7, Gpio.direction.out));
@@ -52,7 +51,7 @@ describe('Gpio', () => {
 
   afterEach('Close', () => {
     return gpio.close(7)
-      .then(() => promisify(fsExtra.remove)(path));
+      .then(() => promisify(fs.remove)(path));
   });
 
   afterEach('Reset class configuration', () => {
