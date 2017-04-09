@@ -299,4 +299,3 @@ If `PI_GPIO_FREQUENCY = 50`, during a write, 20 (1000 / 50) on-off process will 
 #### On-Off process
 If `PI_GPIO_FREQUENCY = 50` and the value to write is `0.75`, the on-off process will be performed 20 times.  
 Every 20ms it writes `1` to the pin and after 15ms (20 * 0.75) it will writes `0`.  
-

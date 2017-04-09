@@ -1,60 +1,60 @@
 {
-	"name": "@jdes/gpio",
-	"private": true,
-	"version": "1.0.91",
-	"description": "Raspberry Pi GPIO PWM adapter with Promises",
-	"author": "Jean Desravines <hi@jeandesravines.com> (http://www.jeandesravines.com)",
-	"scripts": {
-		"clean": "rm -rf coverage npm-debug.log* 2> /dev/null",
-		"commit": "commit-wizard",
-		"coveralls": "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
-		"lint": "node_modules/.bin/eslint --fix lib test",
-		"pretest": "npm run clean",
-		"test": "node_modules/istanbul/lib/cli.js cover node_modules/.bin/_mocha -- --recursive"
-	},
-	"main": "lib/helper/gpio.js",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/jeandesravines/gpio.git"
-	},
-	"bugs": {
-		"url": "https://github.com/jeandesravines/gpio/issues"
-	},
-	"keywords": [
-		"es6",
-		"gpio",
-		"promise",
-		"pulse width modulation",
-		"pwm",
-		"raspberry pi"
-	],
-	"dependencies": {
-		"@jdes/catcher": "^2.0.0",
-		"@jdes/env-cleaner": "^1.0.0",
-		"@jdes/promisify": "^1.0.0",
-		"fs-extra": "^0.30.0"
-	},
-	"devDependencies": {
-		"chai": "^3.5.0",
-		"coveralls": "^2.11.11",
-		"eslint": "^3.8.1",
-		"eslint-config-google": "^0.7.0",
-		"istanbul": "^0.4.2",
-		"mocha": "^3.0.1",
-		"pre-git": "^3.10.0",
-		"sinon": "^1.17.5"
-	},
-	"homepage": "https://github.com/jeandesravines/gpio",
-	"license": "MIT",
-	"engines": {
-		"node": ">=6.0.0"
-	},
-	"config": {
-		"pre-git": {
-			"commit-msg": "simple",
-			"post-commit": "git status",
-			"pre-commit": "npm run --silent lint",
-			"pre-push": "npm run --silent test"
-		}
-	}
+  "name": "@jdes/gpio",
+  "private": true,
+  "version": "1.0.91",
+  "description": "Raspberry Pi GPIO PWM adapter with Promises",
+  "author": "Jean Desravines <hi@jeandesravines.com> (http://www.jeandesravines.com)",
+  "scripts": {
+    "clean": "rm -rf coverage npm-debug.log* 2> /dev/null",
+    "commit": "commit-wizard",
+    "coveralls": "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
+    "lint": "node_modules/.bin/eslint --fix lib test",
+    "pretest": "npm run clean",
+    "test": "node_modules/istanbul/lib/cli.js cover node_modules/.bin/_mocha -- --recursive"
+  },
+  "main": "lib/helper/gpio.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeandesravines/gpio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jeandesravines/gpio/issues"
+  },
+  "keywords": [
+    "es6",
+    "gpio",
+    "promise",
+    "pulse width modulation",
+    "pwm",
+    "raspberry pi"
+  ],
+  "dependencies": {
+    "@jdes/catcher": "^2.0.0",
+    "@jdes/env-cleaner": "^1.0.0",
+    "@jdes/promisify": "^1.0.0",
+    "fs-extra": "^0.30.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.11",
+    "eslint": "^3.8.1",
+    "eslint-config-google": "^0.7.0",
+    "istanbul": "^0.4.2",
+    "mocha": "^3.0.1",
+    "pre-git": "^3.10.0",
+    "sinon": "^1.17.5"
+  },
+  "homepage": "https://github.com/jeandesravines/gpio",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "config": {
+    "pre-git": {
+      "commit-msg": "simple",
+      "post-commit": "git status",
+      "pre-commit": "npm run --silent lint",
+      "pre-push": "npm run --silent test"
+    }
+  }
 }
