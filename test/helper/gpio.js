@@ -137,7 +137,7 @@ describe('Gpio', () => {
       it('should only have keys € [0;40]', () => {
         Object.keys(Gpio.mappings).forEach((revision) => {
           Object.keys(Gpio.mappings[revision]).forEach((key) => {
-            expect(key).to.be.within(0, 40);
+            expect(Number.parseInt(key, 10)).to.be.within(0, 40);
           });
         });
       });
